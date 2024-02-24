@@ -37,7 +37,6 @@ displayBoard board = unlines [concatMap cellDisplay row | row <- board]
 displayWelcome :: String
 displayWelcome = ">>>> Welcome to Conway's Game of Life! <<<<\n"
                ++ ">>>> * means dead and 0 means alive \n"
-               ++ ">>>> to edit and input your own state of the board \n>>>> start with typying :{ and enter then copy and \n>>>> paste the board and edit the cells from dead  \n>>>> to alive at the end enter and type in :} \n"
 
 
 -- makes a 20*50 board out of a string of 100 character
