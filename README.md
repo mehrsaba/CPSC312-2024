@@ -2,5 +2,3 @@
 authors: Mehrsa Baghaei, Yichen Lu
 
 ### Conway's Game of Life
-
-
