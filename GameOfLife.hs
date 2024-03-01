@@ -1,6 +1,7 @@
 module Life where
 
 --------------------------------------------
+-- Types and Data Definitions
 
 type Position = (Int, Int) -- (row,col)
 
@@ -14,8 +15,10 @@ data Cell = Cell {
 cellDisplay :: Cell -> String
 cellDisplay cell = if state cell then "0" else "*"
 
+-- Represents the game board.
 type Board = [[Cell]]
 
+-- Represents a sequence of game board states.
 type GameStates = [Board]
 
 -------------------------------------------------------------
@@ -48,7 +51,8 @@ stringToBoard str = chunksOf 50 $ zipWith createCell [(x, y) | y <- [1..20], x <
         
         chunksOf _ [] = []
         chunksOf n xs = take n xs : chunksOf n (drop n xs)
- 
+
+-- Converts a string to a board with automatic dimensions.
 stringToBoardAuto :: [Char] -> Board
 stringToBoardAuto str = zipWith createRow [1..numRows] rows
     where
@@ -67,18 +71,22 @@ stringToBoardAuto str = zipWith createRow [1..numRows] rows
 
 -- game of life logic
 
+-- Counts the number of live cells on the board.
 countLives :: Board -> Int
 countLives board = length $ filter (state) $ concat board
 
+-- List of positions representing neighboring cells.
 neighborMatrix :: [Position]
 neighborMatrix = [
     (-1,-1), (-1,0), (-1,1),
     (0, -1),         ( 0,1),
     (1, -1), (1, 0), ( 1,1)]
 
+-- Counts the number of live neighbors of a cell.
 countLiveNeighbors :: Board -> Position -> Int
 countLiveNeighbors board pos = length $ filter (\ cell -> state cell) (findNeighbors board pos)
 
+-- Finds neighboring cells of a given cell.
 findNeighbors :: Board -> Position -> [Cell]
 findNeighbors board (row0, col0) = filter isNeighbor (concat board)
     where
@@ -87,7 +95,7 @@ findNeighbors board (row0, col0) = filter isNeighbor (concat board)
             where 
                 (row, col) = position cell
 
-
+-- Computes the next generation of the board based on Conway's rules.
 nextGeneration :: Board -> Board
 nextGeneration board = map (map updateCellState) board
     where
@@ -105,7 +113,7 @@ nextGeneration board = map (map updateCellState) board
         determineNewState False _                 = False
 
 --------------------------------------------------------------
--- starts program
+-- Program Execution
 
 
 -- Function to read the board from a file
